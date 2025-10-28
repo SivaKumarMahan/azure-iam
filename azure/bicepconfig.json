@@ -1,0 +1,21 @@
+{
+  "analyzers": {
+    "core": {
+      "rules": {
+        "no-unused-params": {
+          "level": "warning"
+        }
+      }
+    }
+  },
+  "experimentalFeaturesEnabled": {
+    "extensibility": true,
+    "assertions": true,
+    "extendableParamFiles": true,
+    "optionalModuleNames": true,
+    "resourceTypedParamsAndOutputs": true,
+    "testFramework": true,
+    "secureOutputs": true,
+    "typedVariables": true     
+  }
+}

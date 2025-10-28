@@ -1,0 +1,91 @@
+1. Resource Group
+      1. To See the planned changes:
+        az deployment sub what-if --name resourceGroups --location eastus --template-file azure/stacks/resourceGroup/main.bicep --parameters azure/parameters/resourceGroup/params.bicepparam
+      2. To Create a stack:
+        az stack sub create --name resourceGroups --location eastus --template-file azure/stacks/resourceGroup/main.bicep --parameters azure/parameters/resourceGroup/DevOps_resources/params.bicepparam --deny-settings-mode none --action-on-unmanage deleteAll --yes
+      3. To delete a stack:
+        az stack sub delete --name resourceGroups --action-on-unmanage deleteResources --yes
+
+2. User Assigned Managed Identity
+      1. To See the planned changes:
+        az deployment group what-if --name uami --resource-group DevOps_resources --template-file azure/stacks/userAssignedManagedIdentity/main.bicep --parameters azure/parameters/userAssignedManagedIdentity/azureDevopsMI/params.bicepparam
+      2. To Create a stack:
+        az stack group create --name uami --resource-group DevOps_resources --template-file azure/stacks/userAssignedManagedIdentity/main.bicep --parameters azure/parameters/userAssignedManagedIdentity/azureDevopsMI/params.bicepparam --deny-settings-mode none --action-on-unmanage deleteResources --yes
+      3. To delete a stack:
+        az stack group delete --name uami --resource-group DevOps_resources --action-on-unmanage deleteResources --yes
+
+3. userCustomRole
+      1. To See the planned changes:
+        az deployment group what-if --name users --resource-group DevOps_resources --template-file azure/stacks/userCustomRole/main.bicep --parameters azure/parameters/userCustomRole/azurerolevishal/params.bicepparam
+      2. To Create a stack:
+        az stack group create --name users --resource-group DevOps_resources --template-file azure/stacks/userRoleAssignment/main.bicep --parameters azure/parameters/userRoleAssignment/siva/params.bicepparam --deny-settings-mode none --action-on-unmanage deleteResources --yes
+      3. To delete a stack:
+        az stack group delete --name users --resource-group DevOps_resources --action-on-unmanage deleteResources --yes
+
+4. groupCustomRole
+      1. To See the planned changes:
+        az deployment group what-if --name groups --resource-group DevOps_resources --template-file azure/stacks/groupRoleAssignment/main.bicep --parameters azure/parameters/groupRoleAssignment/test/params.bicepparam
+      2. To Create a stack:
+        az stack group create --name groups --resource-group DevOps_resources --template-file azure/stacks/groupRoleAssignment/main.bicep --parameters azure/parameters/groupRoleAssignment/test/params.bicepparam --deny-settings-mode none --action-on-unmanage deleteResources --yes
+      3. To delete a stack:
+        az stack group delete --name groups --resource-group DevOps_resources --action-on-unmanage deleteResources --yes
+
+5. userPredefinedRole
+      1. To See the planned changes:
+        az deployment group what-if --name Contributor --resource-group DevOps_resources --template-file azure/stacks/userPredefinedRole/main.bicep --parameters azure/parameters/userPredefinedRole/siva/params.bicepparam
+      2. To Create a stack:
+        az stack group create --name Contributor --resource-group DevOps_resources --template-file azure/stacks/userPredefinedRole/main.bicep --parameters azure/parameters/userPredefinedRole/siva/params.bicepparam --deny-settings-mode none --action-on-unmanage deleteResources --yes
+      3. To delete a stack:
+        az stack group delete --name Contributor --resource-group DevOps_resources --action-on-unmanage deleteResources --yes
+
+6. groupPredefinedRole
+      1. To See the planned changes:
+        az deployment group what-if --name Contributor --resource-group DevOps_resources --template-file azure/stacks/groupPredefinedRole/main.bicep --parameters azure/parameters/groupPredefinedRole/test/params.bicepparam
+      2. To Create a stack:
+        az stack group create --name Contributor --resource-group DevOps_resources --template-file azure/stacks/groupPredefinedRole/main.bicep --parameters azure/parameters/groupPredefinedRole/test/params.bicepparam --deny-settings-mode none --action-on-unmanage deleteResources --yes
+      3. To delete a stack:
+        az stack group delete --name Contributor --resource-group DevOps_resources --action-on-unmanage deleteResources --yes
+
+Command to get Object Id of all Users:
+az ad user list --query "[].{Name: displayName, Email: userPrincipalName, id: id}" -o json > users.json
+
+Command to get Object Id of one user:
+az ad user show --id username@email.com --query id
+
+Command to get the list of all groups:
+az ad group list --query "[].{Name:displayName, id:id}" -o json > groups.json
+
+Command to get Object Id of a Group:
+az ad group show --group "devops" --query id
+
+Permissions:
+      'Microsoft.ContainerService/managedClusters/*'
+      'Microsoft.ContainerRegistry/registries/*'
+      'Microsoft.Network/virtualNetworks/*'
+      'Microsoft.OperationalInsights/workspaces/*'
+      'Microsoft.DBforPostgreSQL/servers/*'
+      'Microsoft.DBforPostgreSQL/flexibleServers/*'
+      'Microsoft.App/containerapps/*'
+      'Microsoft.Resources/subscriptions/resourceGroups/*'
+      'Microsoft.Network/networkSecurityGroups/*'
+      'Microsoft.Resources/*'
+      'Microsoft.KeyVault/vaults/*'
+      'Microsoft.Network/privateDnsZones/*'
+      'Microsoft.App/managedEnvironments/*'
+      'Microsoft.Authorization/roleAssignments/*'
+      'Microsoft.OperationsManagement/*'
+      'Microsoft.OperationalInsights/*'
+      'Microsoft.ManagedIdentity/*'
+      'Microsoft.ContainerInstance/*'
+      'Microsoft.Storage/*'
+      'Microsoft.Authorization/*'
+      'Microsoft.Insights/components/*'
+      'Microsoft.Web/sites/*'
+
+
+
+Built-in Roles: 
+Contributor: 'b24988ac-6180-42a0-ab88-20f7382dd24c'
+Reader: 'acdd72a7-3385-48ef-bd42-f606fba81ae7'
+Owner: '8e3af657-a8ff-443c-a75c-2fe8c4bcb635'
+User Access Administrator: 'e8a630f0-cc32-4b86-83e6-692bf76c7694'
